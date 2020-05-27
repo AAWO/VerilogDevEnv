@@ -20,6 +20,7 @@ help-targets:
 	@echo "   help-vars:     - list of supported variables"
 	@echo "   sim:           - build design with iverilog"
 	@echo "   lint:          - lint design with verilator"
+	@echo "   synth:         - synthesize design with yosys"
 	@echo ""
 
 help-vars:
@@ -54,6 +55,9 @@ endif
 
 lint:
 	verilator --lint-only -Wall -Isrc/libs/ run/verilator_config.vlt `sed '/^tb/ d' run/$(BLOCK)_file_list.txt`
+
+synth:
+	yosys -o $(BLOCK)_synth.v -p "read_verilog -Isrc/libs/ `sed '/^tb/d' run/$(BLOCK)_file_list.txt | tr '\n' ' '`; synth -auto-top -flatten"
 
 $(BLOCK):
 	mkdir -p run/$@
