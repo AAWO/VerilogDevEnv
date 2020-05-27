@@ -1,0 +1,27 @@
+PAR_TYPE ?= RAND
+
+# Parameters values
+ifneq ("$(wildcard $(TOPDIR)/run/params/$(BLOCK)_params.txt)","")
+PAR_NAMES = $(shell awk '{print $$1}' $(TOPDIR)/run/params/$(BLOCK)_params.txt)
+PAR_MIN = $(shell awk '{print $$2}' $(TOPDIR)/run/params/$(BLOCK)_params.txt)
+PAR_MAX = $(shell awk '{print $$3}' $(TOPDIR)/run/params/$(BLOCK)_params.txt)
+NUM = $(shell seq 1 $(words $(PAR_NAMES)))
+
+ifneq (,$(filter $(PAR_TYPE), RAND Rand rand))
+# Random parameters
+COMPILE_PARAMS += $(foreach var,$(NUM),-P$(TOPLEVEL).$(word $(var), $(PAR_NAMES))=$(shell python $(TOPDIR)/run/randInt.py $(word $(var), $(PAR_MIN)) $(word $(var), $(PAR_MAX))))
+else ifneq (,$(filter $(PAR_TYPE), MIN Min min))
+# Lower bounds parameters
+COMPILE_PARAMS += $(foreach var,$(NUM),-P$(TOPLEVEL).$(word $(var), $(PAR_NAMES))=$(word $(var), $(PAR_MIN)))
+else ifneq (,$(filter $(PAR_TYPE), MAX Max max))
+# Upper bounds parameters
+COMPILE_PARAMS += $(foreach var,$(NUM),-P$(TOPLEVEL).$(word $(var), $(PAR_NAMES))=$(word $(var), $(PAR_MAX)))
+else ifneq (,$(filter $(PAR_TYPE), DEF Def def DEFAULT Default default ))
+# Default parameters
+else
+$(error Illegal PAR_TYPE value. Legal values: [RAND, MIN, MAX, DEF])
+endif
+
+endif
+
+export COMPILE_PARAMS
