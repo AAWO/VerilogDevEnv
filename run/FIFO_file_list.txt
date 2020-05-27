@@ -1,0 +1,3 @@
+src/DualPortRAM.v
+src/FIFO_DPRAM.v
+tb/FIFO_tb.v

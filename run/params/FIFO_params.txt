@@ -1,0 +1,2 @@
+DATA_W      1 1024
+FIFO_DEPTH  1 1024
