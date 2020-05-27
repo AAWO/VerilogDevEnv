@@ -7,6 +7,7 @@ Current tools used by VerilogDevEnv:
 - Icarus Verilog (iverilog)
 - Verilator
 - cocotb 
+- Yosys
 
 The example FIFO module with testbench is provided
 
@@ -35,9 +36,10 @@ To run a test, *make* command should be invoked from top directory with argument
 
 ### Supported targets
 
-- help - prints help
-- sim - runs simulation
-- lint - runs code linting
+- help  - prints help
+- sim   - runs simulation with iverilog (and optionally cocotb)
+- lint  - runs code linting with Verilator
+- synth - runs synthesis with Yosys
 
 ### Defining parameters
 
