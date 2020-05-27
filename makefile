@@ -18,6 +18,7 @@ help-targets:
 	@echo "   help:          - main help page"
 	@echo "   help-targets:  - list of supported targets"
 	@echo "   help-vars:     - list of supported variables"
+	@echo "   checktools:    - verify if required tools are installed"
 	@echo "   sim:           - build design with iverilog"
 	@echo "   lint:          - lint design with verilator"
 	@echo "   synth:         - synthesize design with yosys"
@@ -30,6 +31,9 @@ help-vars:
 	@echo "   LINT:          - lint-tool: verilator"
 	@echo "   PAR_TYPE:      - parameters type: rand (default), min, max, def"
 	@echo ""
+
+checktools:
+	run/checkDepend.sh
 
 TB_PY=$(shell find tb/ -maxdepth 1 -name '*.py' -print)
 TB_V =$(shell find tb/ -maxdepth 1 -name '*.v' -print)

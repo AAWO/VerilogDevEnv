@@ -19,6 +19,7 @@ The example FIFO module with testbench is provided
   - randInt.py             - pseudo-random values generator
   - makefile.iveriargs     - makefile sippet generating iverilog flags with module's parameters
   - verilator_config.vlt   - Verilator configuration file
+  - checkDepend.sh         - script for verification if required tools are installed
 - src/                     - directory for source design files
   - libs/                  - directory with libraries included in other modules
 - tb/                      - directory for testbenches
@@ -36,10 +37,11 @@ To run a test, *make* command should be invoked from top directory with argument
 
 ### Supported targets
 
-- help  - prints help
-- sim   - runs simulation with iverilog (and optionally cocotb)
-- lint  - runs code linting with Verilator
-- synth - runs synthesis with Yosys
+- help       - prints help
+- checktools - verify if required tools are installed
+- sim        - runs simulation with iverilog (and optionally cocotb)
+- lint       - runs code linting with Verilator
+- synth      - runs synthesis with Yosys
 
 ### Defining parameters
 
