@@ -23,6 +23,7 @@ The example FIFO module with testbench is provided
 - src/                     - directory for source design files
   - libs/                  - directory with libraries included in other modules
 - tb/                      - directory for testbenches
+  - common/                - directory for common test files included in other testbenches
 ```
 
 ### Test configuration
@@ -49,6 +50,6 @@ In order to define testbench's parameters values a file "run/params/*name*_param
 
 When running simulation the parameters values can be set as: 
 - RAND - random,
-- MIN - minimum,
-- MAX - maximum,
-- DEF - default (defined in testbench parameter's definition).
+- MIN  - minimum,
+- MAX  - maximum,
+- DEF  - default (defined in testbench parameter's definition).
