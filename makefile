@@ -1,4 +1,3 @@
-# File Name : Defines.vh
 # Author    : Andrzej Wojciechowski (AAWO)
 # Copyright : Andrzej Wojciechowski (AAWO)
 # --------------------------------------------

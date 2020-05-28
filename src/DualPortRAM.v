@@ -1,4 +1,4 @@
-// File Name : Defines.vh
+// File Name : DualPortRAM.v
 // Author    : Andrzej Wojciechowski (AAWO)
 // Copyright : Andrzej Wojciechowski (AAWO)
 // --------------------------------------------

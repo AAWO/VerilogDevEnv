@@ -1,4 +1,4 @@
-// File Name : Defines.vh
+// File Name : FIFO_tb.v
 // Author    : Andrzej Wojciechowski (AAWO)
 // Copyright : Andrzej Wojciechowski (AAWO)
 // --------------------------------------------

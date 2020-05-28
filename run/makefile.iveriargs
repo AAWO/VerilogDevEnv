@@ -1,3 +1,6 @@
+# Author    : Andrzej Wojciechowski (AAWO)
+# Copyright : Andrzej Wojciechowski (AAWO)
+# --------------------------------------------
 PAR_TYPE ?= RAND
 
 # Parameters values

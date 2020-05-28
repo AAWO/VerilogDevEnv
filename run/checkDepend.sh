@@ -1,4 +1,8 @@
 #!/bin/bash
+# File Name : checkDepend.sh
+# Author    : Andrzej Wojciechowski (AAWO)
+# Copyright : Andrzej Wojciechowski (AAWO)
+# --------------------------------------------
 
 declare -A cmd_dict=( ["make"]="make" ["python3"]="Python 3" ["iverilog"]="Icarus Verilog (iverilog)" ["gtkwave"]="GTKwave" ["verilator"]="Verilator" ["cocotb-config"]="cocotb" ["yosys"]="Yosys" )
 cmd_array=( "make" "python3" "iverilog" "gtkwave" "verilator" "cocotb-config" "yosys" )
