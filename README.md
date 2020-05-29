@@ -1,6 +1,6 @@
 ## VerilogDevEnv - Verilog Development Environment
 
-VerilogDevEnv is an environment consisting of directory structure and open-source tools designed for digital design development using Verilog HDL.
+VerilogDevEnv is an environment consisting of directory structure and open-source as well as commercial tools scripts designed for digital design development using Verilog HDL.
 
 Current tools used by VerilogDevEnv:
 - make
@@ -8,6 +8,7 @@ Current tools used by VerilogDevEnv:
 - Verilator
 - cocotb 
 - Yosys
+- ModelSim
 
 The example FIFO module with testbench is provided
 
@@ -20,6 +21,7 @@ The example FIFO module with testbench is provided
   - makefile.iveriargs     - makefile sippet generating iverilog flags with module's parameters
   - verilator_config.vlt   - Verilator configuration file
   - checkDepend.sh         - script for verification if required tools are installed
+  - comp_mod.tcl           - supporting functions for ModelSim simulation
 - src/                     - directory for source design files
   - libs/                  - directory with libraries included in other modules
 - tb/                      - directory for testbenches
