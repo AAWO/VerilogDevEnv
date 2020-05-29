@@ -18,7 +18,8 @@ help-targets:
 	@echo "   help-targets:  - list of supported targets"
 	@echo "   help-vars:     - list of supported variables"
 	@echo "   checktools:    - verify if required tools are installed"
-	@echo "   sim:           - build design with iverilog"
+	@echo "   sim:           - build design"
+	@echo "   sim_gui:       - build design and run simulation with GUI"
 	@echo "   lint:          - lint design with verilator"
 	@echo "   synth:         - synthesize design with yosys"
 	@echo ""
@@ -41,7 +42,12 @@ TOPLEVEL=$(shell tail -n 1 run/$(BLOCK)_file_list.txt | sed 's/.*\/\(.*\)\..*/\1
 include run/makefile.iveriargs
 
 sim: | $(BLOCK)
-ifneq (,$(findstring $(BLOCK)_tb,$(TB_PY)))
+ifeq ($(SIM), MOD)
+# Run ModelSim
+	vlib work
+	vlog -sv -work work +incdir+src/_libs/ +incdir+tb/_common/ -f run/$(BLOCK)_file_list.txt
+	vsim -c $(TOPLEVEL) -do 'run -all'
+else ifneq (,$(findstring $(BLOCK)_tb,$(TB_PY)))
 # TB file in python - use cocotb
 	@echo "Found TB Python file - using cocotb with $(SIM) sim-tool"
 	$(MAKE) -C run TEST_NAME=$(BLOCK) PAR_TYPE=$(PAR_TYPE)
@@ -55,6 +61,11 @@ else
 # TB file extension not matched - error
 	$(error TB file $(BLOCK)_tb not found. Supported file extension: [.v, .py])
 endif
+
+sim_gui:
+	vlib work
+	vlog -sv -work work +incdir+src/_libs/ +incdir+tb/_common/ -f run/$(BLOCK)_file_list.txt
+	vsim $(TOPLEVEL) -do run/$(BLOCK)_wave.do -do run/comp_mod.tcl -do 'run -all'
 
 lint:
 	verilator --lint-only -Wall -Isrc/libs/ run/verilator_config.vlt `sed '/^tb/ d' run/$(BLOCK)_file_list.txt`
