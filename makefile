@@ -62,10 +62,16 @@ else
 	$(error TB file $(BLOCK)_tb not found. Supported file extension: [.v, .py])
 endif
 
+ifeq ($(SIM), MOD)
+# ModelSim
 sim_gui:
 	vlib work
 	vlog -sv -work work +incdir+src/_libs/ +incdir+tb/_common/ -f run/$(BLOCK)_file_list.txt
 	vsim $(TOPLEVEL) -do run/$(BLOCK)_wave.do -do run/comp_mod.tcl -do 'run -all'
+else
+sim_gui: | sim
+	gtkwave run/FIFO/FIFO.vcd run/FIFO_wave.gtkw
+endif
 
 lint:
 	verilator --lint-only -Wall -Isrc/libs/ run/verilator_config.vlt `sed '/^tb/ d' run/$(BLOCK)_file_list.txt`
