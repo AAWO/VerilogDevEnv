@@ -70,7 +70,7 @@ sim_gui:
 	vsim $(TOPLEVEL) -do run/$(BLOCK)_wave.do -do run/comp_mod.tcl -do 'run -all'
 else
 sim_gui: | sim
-	gtkwave run/FIFO/FIFO.vcd run/FIFO_wave.gtkw
+	gtkwave run/$(BLOCK)/$(BLOCK).vcd run/$(BLOCK)_wave.gtkw
 endif
 
 lint:
