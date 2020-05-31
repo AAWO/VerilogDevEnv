@@ -45,7 +45,7 @@ sim: | $(BLOCK)
 ifeq ($(SIM), MOD)
 # Run ModelSim
 	vlib work
-	vlog -sv -work work +incdir+src/_libs/ +incdir+tb/_common/ -f run/$(BLOCK)_file_list.txt
+	vlog -sv -work work +incdir+src/libs/ +incdir+tb/common/ -f run/$(BLOCK)_file_list.txt
 	vsim -c $(TOPLEVEL) -do 'run -all'
 else ifneq (,$(findstring $(BLOCK)_tb,$(TB_PY)))
 # TB file in python - use cocotb
@@ -66,7 +66,7 @@ ifeq ($(SIM), MOD)
 # ModelSim
 sim_gui:
 	vlib work
-	vlog -sv -work work +incdir+src/_libs/ +incdir+tb/_common/ -f run/$(BLOCK)_file_list.txt
+	vlog -sv -work work +incdir+src/libs/ +incdir+tb/common/ -f run/$(BLOCK)_file_list.txt
 	vsim $(TOPLEVEL) -do run/$(BLOCK)_wave.do -do run/comp_mod.tcl -do 'run -all'
 else
 sim_gui: | sim
