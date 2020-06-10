@@ -4,6 +4,7 @@
 BLOCK    ?= FIFO
 SIM      ?= iverilog
 LINT     ?= verilator
+IDE      ?= ""
 PAR_TYPE ?= rand
 
 TOPDIR=$(PWD)
@@ -21,7 +22,8 @@ help-targets:
 	@echo "   sim:           - build design"
 	@echo "   sim_gui:       - build design and run simulation with GUI"
 	@echo "   lint:          - lint design with verilator"
-	@echo "   synth:         - synthesize design with yosys"
+	@echo "   synth:         - synthesize design with yosys or selected IDE"
+	@echo "   impl:          - implement design with selected IDE"
 	@echo ""
 
 help-vars:
@@ -29,6 +31,7 @@ help-vars:
 	@echo "   BLOCK:         - design to anlyze"
 	@echo "   SIM:           - simulation-tool: iverilog"
 	@echo "   LINT:          - lint-tool: verilator"
+	@echo "   IDE:           - FPGA IDE: Vivado"
 	@echo "   PAR_TYPE:      - parameters type: rand (default), min, max, def"
 	@echo ""
 
@@ -47,6 +50,11 @@ ifeq ($(SIM), MOD)
 	vlib work
 	vlog -sv -work work +incdir+src/libs/ +incdir+tb/common/ -f run/$(BLOCK)_file_list.txt
 	vsim -c $(TOPLEVEL) -do 'run -all'
+else ifeq ($(IDE), Vivado)
+sim:
+# Vivado
+	rm ./Vivado/*.backup.log ./Vivado/*.backup.jou
+	vivado -mode batch -log Vivado/setup.log -jou Vivado/setup.jou -source run/Vivado_compile.tcl -notrace -tclargs $(BLOCK) sim
 else ifneq (,$(findstring $(BLOCK)_tb,$(TB_PY)))
 # TB file in python - use cocotb
 	@echo "Found TB Python file - using cocotb with $(SIM) sim-tool"
@@ -68,6 +76,11 @@ sim_gui:
 	vlib work
 	vlog -sv -work work +incdir+src/libs/ +incdir+tb/common/ -f run/$(BLOCK)_file_list.txt
 	vsim $(TOPLEVEL) -do run/$(BLOCK)_wave.do -do run/comp_mod.tcl -do 'run -all'
+else ifeq ($(IDE), Vivado)
+sim_gui:
+# Vivado
+	rm ./Vivado/*.backup.log ./Vivado/*.backup.jou
+	vivado -mode gui -log Vivado/setup.log -jou Vivado/setup.jou -source run/Vivado_compile.tcl -notrace -tclargs $(BLOCK) sim
 else
 sim_gui: | sim
 	gtkwave run/$(BLOCK)/$(BLOCK).vcd run/$(BLOCK)_wave.gtkw
@@ -77,7 +90,18 @@ lint:
 	verilator --lint-only -Wall -Isrc/libs/ run/verilator_config.vlt `sed '/^tb/ d' run/$(BLOCK)_file_list.txt`
 
 synth:
+ifeq ($(IDE), Vivado)
+	rm ./Vivado/*.backup.log ./Vivado/*.backup.jou
+	vivado -mode batch -log Vivado/setup.log -jou Vivado/setup.jou -source run/Vivado_compile.tcl -notrace -tclargs $(BLOCK) synth
+else
 	yosys -o $(BLOCK)_synth.v -p "read_verilog -Isrc/libs/ `sed '/^tb/d' run/$(BLOCK)_file_list.txt | tr '\n' ' '`; synth -auto-top -flatten"
+endif
+
+impl:
+ifeq ($(IDE), Vivado)
+	rm ./Vivado/*.backup.log ./Vivado/*.backup.jou
+	vivado -mode batch -log Vivado/setup.log -jou Vivado/setup.jou -source run/Vivado_compile.tcl -notrace -tclargs $(BLOCK) impl
+endif
 
 $(BLOCK):
 	mkdir -p run/$@

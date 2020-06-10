@@ -20,12 +20,15 @@ The example FIFO module with testbench is provided
   - randInt.py             - pseudo-random values generator
   - makefile.iveriargs     - makefile sippet generating iverilog flags with module's parameters
   - verilator_config.vlt   - Verilator configuration file
-  - checkDepend.sh         - script for verification if required tools are installed
+  - checkDepend.sh         - script for verification if required tools are installed and can be run
   - comp_mod.tcl           - supporting functions for ModelSim simulation
+  - Vivado_compile.tcl     - Vivado compilation script
 - src/                     - directory for source design files
   - libs/                  - directory with libraries included in other modules
 - tb/                      - directory for testbenches
   - common/                - directory for common test files included in other testbenches
+- Vivado/                  - directory with files required for compilation in Vivado, like .xdc files, and project files
+  - target.txt             - file containing name of target FPGA device
 ```
 
 ### Test configuration
@@ -41,10 +44,11 @@ To run a test, *make* command should be invoked from top directory with argument
 ### Supported targets
 
 - help       - prints help
-- checktools - verify if required tools are installed
+- checktools - verify if required tools are installed and can be run
 - sim        - runs simulation with iverilog (and optionally cocotb)
 - lint       - runs code linting with Verilator
-- synth      - runs synthesis with Yosys
+- synth      - runs synthesis with Yosys or Vivado
+- impl       - implement design with Vivado
 
 ### Defining parameters
 
