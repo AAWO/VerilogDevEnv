@@ -59,3 +59,13 @@ When running simulation the parameters values can be set as:
 - MIN  - minimum,
 - MAX  - maximum,
 - DEF  - default (defined in testbench parameter's definition).
+
+### PATH environment variable configuration
+
+Prior to using *VerilogDevEnv* make sure the PATH environment variable is set so that all required tools can be run. 
+
+To verify which programs can be run execute the command:
+```
+make checktools
+```
+
