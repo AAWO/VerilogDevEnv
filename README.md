@@ -9,6 +9,7 @@ Current tools used by VerilogDevEnv:
 - cocotb 
 - Yosys
 - ModelSim
+- Vivado
 
 The example FIFO module with testbench is provided
 
